@@ -3,17 +3,17 @@ const db = require('../models');
 const Address = db.address;
 
 exports.addAddress = (req, res) => {
-    if( !req.body.zipCode || !req.body.state || !req.body.street || !req.body.city || !req.body.contactNumber || !req.body.name){
+    if( !req.headers.authorization || !req.body.zipCode || !req.body.state || !req.body.street || !req.body.city || !req.body.contactNumber || !req.body.name){
         res.status(400).send({
             message: "Please provide all the neccessary details!"
         })
     }
 
-    // if(req.body.isAuthenticated !== true){
-    //     res.status(400).send({
-    //         message: "Please Login first to access this endpoint!"
-    //     })
-    // }
+    if(req.body.isAuthenticated !== true){
+        res.status(400).send({
+            message: "Please Login first to access this endpoint!"
+        })
+    }
 
     if(!/^[1-9][0-9]{5}$/.test(req.body.zipCode)){
         res.status(400).send({

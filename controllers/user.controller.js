@@ -26,7 +26,7 @@ exports.signup = (request, response) => {
                 message: "Invalid email-id format!"
             })
         }
-        else if(!/^((\+)?(\d{2}[-]))?(\d{10}){1}?$/.test(request.body.contact)){
+        else if(!/^((\+)?(\d{2}[-]))?(\d{10}){1}?$/.test(request.body.contactNumber)){
             response.status(400).send({
                 message: "Invalid contact number!"
             })
@@ -71,14 +71,13 @@ exports.login = (request, response) => {
         }
         else {            
             if (bcrypt.compareSync(request.body.password, userData.password)) {
-                userData.isLoggedIn = true;
+                userData.isAuthenticated = true;
                 User.findOneAndUpdate(filter, userData)
                 .then(
                     data => {
                         const token = jwt.sign({_id: data._id}, "myPrivateKey");
                         // console.log(token)
-                        data.x_auth_token = token;
-                        data.isAuthenticated = true;
+                        data.x_auth_token = token;                        
                         response.json(
                              data
                             // message: "Logged In Successfully",

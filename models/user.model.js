@@ -4,8 +4,7 @@ module.exports = (mongoose) => {
     const User = mongoose.model(
         "user", mongoose.Schema({            
             role: { 
-                type: Boolean, 
-                default: false 
+                type: String,                 
             },
             firstName: { 
                 type: String, 
@@ -20,7 +19,7 @@ module.exports = (mongoose) => {
                 required: true,
                 unique: true,
                 lowercase: true,
-                match: [/\S+@\S+\.\S+/, 'is invalid'],
+                // match: [/\S+@\S+\.\S+/, 'is invalid'],
             },
             password: { 
                 type: String, 
