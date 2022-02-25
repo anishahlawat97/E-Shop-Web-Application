@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 exports.signup = (request, response) => {
   
     //Validate Request
-    if (!request.body.email || !request.body.password || !request.body.firstName || !request.body.lastName || !request.body.contact) {
+    if (!request.body.email || !request.body.password || !request.body.firstName || !request.body.lastName || !request.body.contactNumber) {
         response.status(400).send({
             message: "Please provide email, password, first name, last name and contact number"
         });
@@ -39,7 +39,7 @@ exports.signup = (request, response) => {
                 firstName: request.body.firstName,
                 lastName: request.body.lastName,
                 email: request.body.email,
-                contactNumber: request.body.contact,                
+                contactNumber: request.body.contactNumber,                
                 role: request.body.role ? request.body.role : 'user',                
             });
             user.save(user)

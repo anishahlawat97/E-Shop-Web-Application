@@ -26,10 +26,7 @@ module.exports = (mongoose) => {
                 type: Number, 
                 required: true
             },
-            user: {
-                _id: {type: Schema.Types.ObjectId },
-                ref: 'User'
-            },
+            
         }, { timestamps: true })
     );
     return Address;

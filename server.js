@@ -31,6 +31,9 @@ app.get("/", (req, res) => {
     });
 });
 
+require('./routes/address.routes')(app);
+require('./routes/user.routes')(app);
+
 const port = 8085;
 app.listen(port, () => {
     console.log(`Server is listening on Port ${port}`);

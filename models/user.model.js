@@ -3,11 +3,15 @@ const { type } = require("express/lib/response");
 module.exports = (mongoose) => {
     const User = mongoose.model(
         "user", mongoose.Schema({            
-            isAdmin: { 
+            role: { 
                 type: Boolean, 
                 default: false 
             },
-            name: { 
+            firstName: { 
+                type: String, 
+                required: true 
+            },
+            lastName: { 
                 type: String, 
                 required: true 
             },
@@ -22,6 +26,10 @@ module.exports = (mongoose) => {
                 type: String, 
                 required: true 
             },
+            contactNumber: {
+                type: String,
+                required: true
+            }
         }, { timestamps: true })
     );
     return User;
