@@ -2,6 +2,7 @@ const db = require('../models');
 const User = db.user;
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcrypt");
+const { user } = require('../models');
 
 exports.signup = (request, response) => {
   
@@ -40,7 +41,7 @@ exports.signup = (request, response) => {
                 lastName: request.body.lastName,
                 email: request.body.email,
                 contactNumber: request.body.contactNumber,                
-                role: request.body.role ? request.body.role : 'user', 
+                isAdmin: request.body.isAdmin ? request.body.isAdmin : false, 
                 isAuthenticated: false               
             });
             user.save(user)
@@ -76,13 +77,19 @@ exports.login = (request, response) => {
                 User.findOneAndUpdate(filter, userData)
                 .then(
                     data => {
-                        const token = jwt.sign({_id: data._id}, "myPrivateKey");
+                        // console.log(data.isAdmin)
+                        const token = jwt.sign({_id: data._id, isAdmin: data.isAdmin}, "myPrivateKey");
                         // console.log(token)
                         data.x_auth_token = token;                        
                         response.json(
                              data
                             // message: "Logged In Successfully",
                         );
+                        response.header("x_auth_token", token).send({
+                            token,
+                            email: req.body.email,
+                            id: user._id,
+                        });   
                     }
                 ).catch(err => {
                     response.status(500).send({

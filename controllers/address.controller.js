@@ -8,12 +8,12 @@ exports.addAddress = (req, res) => {
             message: "Please provide all the neccessary details!"
         })
     }
-    console.log(req.body)
-    if (req.body.isAuthenticated !== true) {
-        res.status(400).send({
-            message: "Please Login first to access this endpoint!"
-        })
-    }
+    
+    // if (req.body.isAuthenticated !== true) {
+    //     res.status(400).send({
+    //         message: "Please Login first to access this endpoint!"
+    //     })
+    // }
 
     if (!/^[1-9][0-9]{5}$/.test(req.body.zipCode)) {
         res.status(400).send({

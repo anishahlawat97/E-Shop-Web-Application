@@ -6,7 +6,7 @@ module.exports = (app) => {
     var router = require('express').Router();
 
     //Add address
-    router.post("/addresses", address.addAddress);
+    router.post("/addresses", auth, address.addAddress);
 
     app.use("/api", router);
 

@@ -1,8 +1,9 @@
 module.exports = (mongoose) => {
     const User = mongoose.model(
         "user", mongoose.Schema({            
-            role: { 
-                type: String,                 
+            isAdmin: { 
+                type: Boolean,     
+                default: false            
             },
             firstName: { 
                 type: String, 
