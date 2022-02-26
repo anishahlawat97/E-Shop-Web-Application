@@ -1,5 +1,3 @@
-const { type } = require("express/lib/response");
-
 module.exports = (mongoose) => {
     const User = mongoose.model(
         "user", mongoose.Schema({            

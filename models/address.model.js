@@ -1,5 +1,5 @@
-module.exports = (mongoose) => {    
-    const Address = mongoose.model(
+module.exports = (mongoose) => {  
+        const Address = mongoose.model(
         "address", mongoose.Schema({
             name: { 
                 type: String, 
@@ -26,7 +26,10 @@ module.exports = (mongoose) => {
                 type: Number, 
                 required: true
             },
-            
+            user:{
+                type: mongoose.Schema.Types.ObjectId,                
+                ref: "user"
+            },            
         }, { timestamps: true })
     );
     return Address;

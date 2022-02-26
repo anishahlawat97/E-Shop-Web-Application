@@ -40,7 +40,8 @@ exports.signup = (request, response) => {
                 lastName: request.body.lastName,
                 email: request.body.email,
                 contactNumber: request.body.contactNumber,                
-                role: request.body.role ? request.body.role : 'user',                
+                role: request.body.role ? request.body.role : 'user', 
+                isAuthenticated: false               
             });
             user.save(user)
                 .then(data => {
