@@ -29,8 +29,7 @@ exports.displayProducts = (req, res) => {
     // else{
     //     queryObj.sortBy = 
     // }
-
-    // console.log({ $or: [{ category: queryObj.category }, { name: queryObj.name }, { $sort: { availableItems: -1 } }] })
+    
     Product.find({ $or: [{ category: queryObj.category }, { name: queryObj.name }] }).sort({ price: direction })
         .then(productsData => {
             res.status(200).send({
@@ -79,7 +78,7 @@ exports.getProductByID = (req, res) => {
 }
 
 exports.addProducts = (req,res) => {
-    if(!req.body.name || !req.body.availableItems || !req.body.price || !req.body.category || !req.body.description || !req.body.imageURL || !req.body.manufacturer){
+       if(!req.body.name || !req.body.availableItems || !req.body.price || !req.body.category || !req.body.description || !req.body.imageURL || !req.body.manufacturer){
         res.status(400).send({
             message: "Please provide all the details for the product to be added to the inventory"
         })
@@ -150,14 +149,7 @@ exports.deleteProductByID = (req, res) => {
             message: "ID is required"
         });
         return;
-    }
-
-    // if(!req.headers.x_auth_token){
-    //     res.status(401).send({
-    //         message: "Please Login first to access this endpoint!"
-    //     })
-    //     return;
-    // }
+    } 
 
     Product.findByIdAndDelete(id)
     .then(data => {

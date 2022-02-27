@@ -3,24 +3,20 @@ const Address = db.address;
 const User = db.user;
 
 exports.addAddress = (req, res) => {
-    if ( !req.body.zipCode || !req.body.state || !req.body.street || !req.body.city || !req.body.contactNumber || !req.body.name) {
+    if (!req.body.zipCode || !req.body.state || !req.body.street || !req.body.city || !req.body.contactNumber || !req.body.name) {
         res.status(400).send({
             message: "Please provide all the neccessary details!"
         })
     }
-    
-    // if (req.body.isAuthenticated !== true) {
-    //     res.status(400).send({
-    //         message: "Please Login first to access this endpoint!"
-    //     })
-    // }
 
+    //zip code validation
     if (!/^[1-9][0-9]{5}$/.test(req.body.zipCode)) {
         res.status(400).send({
             message: "Invalid zip code!"
         })
     }
 
+    //contact number validation
     if (!/^((\+)?(\d{2}[-]))?(\d{10}){1}?$/.test(req.body.contactNumber)) {
         res.status(400).send({
             message: "Invalid contact number!"
@@ -28,12 +24,12 @@ exports.addAddress = (req, res) => {
     }
 
     else {
-        // const username =
-        const id = User.find({email: username})
-        .then(data => {
-            console.log(data._id)
-            return data._id
-        })
+        const userID = User.find({ email: username })
+            .then(data => {
+                console.log(data._id)
+                return data._id
+            })
+        //add new address
         const address = new Address({
             name: req.body.name,
             contactNumber: req.body.contactNumber,
@@ -42,15 +38,15 @@ exports.addAddress = (req, res) => {
             city: req.body.city,
             state: req.body.state,
             zipCode: req.body.zipCode,
-            user: id
+            user: userID
         });
         address.save()
             .then(data => {
                 data.populate("user")
-                .then(populatedAddress => {
-                    res.status(200).send(populatedAddress);
-                })   
-                
+                    .then(populatedAddress => {
+                        res.status(200).send(populatedAddress);
+                    })
+
             }).catch(err => {
                 console.log(err);
                 res.status(500).send({

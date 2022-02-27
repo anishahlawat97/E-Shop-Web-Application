@@ -77,19 +77,9 @@ exports.login = (request, response) => {
                 User.findOneAndUpdate(filter, userData)
                 .then(
                     data => {
-                        // console.log(data.isAdmin)
-                        const token = jwt.sign({_id: data._id, isAdmin: data.isAdmin}, "myPrivateKey");
-                        // console.log(token)
-                        data.x_auth_token = token;                        
-                        response.json(
-                             data
-                            // message: "Logged In Successfully",
-                        );
-                        response.header("x_auth_token", token).send({
-                            token,
-                            email: req.body.email,
-                            id: user._id,
-                        });   
+                        
+                        const token = jwt.sign({_id: data._id, isAdmin: data.isAdmin}, "myPrivateKey", {expiresIn: '24h'});                                             
+                        response.send(token);                      
                     }
                 ).catch(err => {
                     response.status(500).send({
